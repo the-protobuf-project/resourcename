@@ -1,0 +1,7 @@
+{
+  "name": "resourcename",
+  "private": true,
+  "workspaces": [
+    "typescript"
+  ]
+}

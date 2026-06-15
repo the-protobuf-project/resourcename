@@ -1,0 +1,60 @@
+{
+	"name": "@the-project-protobuf/resourcename",
+	"version": "1.0.0",
+	"description": "Google-style resource name templates with `{placeholder}` segments, `Device.Resource.Parse` / `Generate`, stage-3 `@resourceName` decorator, and shared console logging — TypeScript for Node, Bun, and browser.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/the-project-protobuf/resourcename.git",
+		"directory": "typescript/resource-name"
+	},
+	"bugs": {
+		"url": "https://github.com/the-project-protobuf/resourcename/issues"
+	},
+	"homepage": "https://github.com/the-project-protobuf/resourcename/tree/main/typescript/resource-name#readme",
+	"keywords": [
+		"resource-name",
+		"google",
+		"api",
+		"routing",
+		"template",
+		"typescript"
+	],
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"README.md"
+	],
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
+	},
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"sideEffects": false,
+	"scripts": {
+		"prebuild": "rm -rf dist",
+		"build": "tsc -p tsconfig.build.json",
+		"prepublishOnly": "npm run build",
+		"check": "tsc --noEmit -p tsconfig.json",
+		"docs": "typedoc --options typedoc.json",
+		"docs:open": "npm run docs && node --input-type=module -e \"import open from 'open'; await open('docs/api/index.html');\""
+	},
+	"peerDependencies": {
+		"typescript": ">=5.0.0 <7.0.0"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"open": "^10.1.0",
+		"typedoc": "^0.27.6",
+		"typescript": "^6.0.2"
+	}
+}

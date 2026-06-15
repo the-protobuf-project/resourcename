@@ -1,0 +1,17 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": false,
+		"allowImportingTsExtensions": false,
+		"verbatimModuleSyntax": false,
+		"outDir": "./dist",
+		"rootDir": ".",
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+		"module": "ESNext",
+		"moduleResolution": "Bundler"
+	},
+	"include": ["index.ts", "lib/**/*.ts", "shared/**/*.ts"],
+	"exclude": ["node_modules", "dist", "examples"]
+}

@@ -1,0 +1,12 @@
+{
+	"name": "@protobuf_project/resourcename-examples",
+	"private": true,
+	"type": "module",
+	"dependencies": {
+		"@protobuf_project/resourcename": "file:.."
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"typescript": "^5.7.0"
+	}
+}

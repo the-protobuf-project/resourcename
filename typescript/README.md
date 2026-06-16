@@ -14,13 +14,20 @@ Published **compiled** output lives under `dist/` (see `tsconfig.build.json` and
 ## Quick start
 
 ```ts
-import { resourceNameBase } from "@the-protobuf-project/resourcename";
+import resourcename from "@the-protobuf-project/resourcename";
 
-class Artist extends resourceNameBase("//music.example.com/artists/{artist_id}") {}
+// Template API
+const t = new resourcename.ResourceTemplate("//music.example.com/artists/{artist_id}");
+t.parse("//music.example.com/artists/radiohead"); // { artist_id: "radiohead" }
+t.generate({ artist_id: "bjork" });               // "//music.example.com/artists/bjork"
 
+// Typed class API (no `declare` needed)
+class Artist extends resourcename.resourceNameBase("//music.example.com/artists/{artist_id}") {}
 Artist.Resource.Parse("//music.example.com/artists/radiohead");
 Artist.Resource.Generate({ artist_id: "bjork" });
 ```
+
+> Prefer named imports? `import { ResourceTemplate, resourceNameBase } from "@the-protobuf-project/resourcename";` works too.
 
 **Decorator** (add `declare static readonly Resource: ClassResource` for typings):
 

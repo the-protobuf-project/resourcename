@@ -20,19 +20,20 @@ pip install -e .
 ## Usage
 
 ```python
-from resourcename import resourcename
+import resourcename
 
-@resourcename("//music.example.com/artists/{artist_id}")
+# Class-based API
+t = resourcename.ResourceTemplate("//music.example.com/artists/{artist_id}")
+print(t.parse("//music.example.com/artists/radiohead"))  # {'artist_id': 'radiohead'}
+print(t.generate(artist_id="bjork"))                     # "//music.example.com/artists/bjork"
+
+# Decorator API
+@resourcename.resource("//music.example.com/artists/{artist_id}")
 class Artist:
     pass
 
-# Parse a resource name
-parsed = Artist.resourcename.parse("//music.example.com/artists/radiohead")
-print(parsed)  # {'artist_id': 'radiohead'}
-
-# Generate a resource name
-name = Artist.resourcename.generate(artist_id="bjork")
-print(name)    # "//music.example.com/artists/bjork"
+print(Artist.resourcename.parse("//music.example.com/artists/radiohead"))  # {'artist_id': 'radiohead'}
+print(Artist.resourcename.generate(artist_id="bjork"))                     # "//music.example.com/artists/bjork"
 ```
 
 ## Development

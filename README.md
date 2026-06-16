@@ -44,14 +44,16 @@ cd go && go test ./... && go run ./example
 ### Python
 
 ```python
-from resourcename import resourcename
+import resourcename
 
-@resourcename("//music.example.com/artists/{artist_id}")
+t = resourcename.ResourceTemplate("//music.example.com/artists/{artist_id}")
+t.parse("//music.example.com/artists/radiohead")   # {'artist_id': 'radiohead'}
+t.generate(artist_id="bjork")                      # "//music.example.com/artists/bjork"
+
+# or the class decorator
+@resourcename.resource("//music.example.com/artists/{artist_id}")
 class Artist:
     pass
-
-Artist.resourcename.parse("//music.example.com/artists/radiohead")   # {'artist_id': 'radiohead'}
-Artist.resourcename.generate(artist_id="bjork")                      # "//music.example.com/artists/bjork"
 ```
 
 ### Rust
@@ -78,11 +80,14 @@ cargo run -p resourcename --example basic
 ### TypeScript
 
 ```ts
-import { resourceNameBase } from "@the-protobuf-project/resourcename";
+import resourcename from "@the-protobuf-project/resourcename";
 
-class Artist extends resourceNameBase("//music.example.com/artists/{artist_id}") {}
+const t = new resourcename.ResourceTemplate("//music.example.com/artists/{artist_id}");
+t.parse("//music.example.com/artists/radiohead"); // { artist_id: "radiohead" }
+t.generate({ artist_id: "bjork" });               // "//music.example.com/artists/bjork"
 
-Artist.Resource.Parse("//music.example.com/artists/radiohead");
+// or a typed class
+class Artist extends resourcename.resourceNameBase("//music.example.com/artists/{artist_id}") {}
 Artist.Resource.Generate({ artist_id: "bjork" });
 ```
 
@@ -94,15 +99,20 @@ cd typescript && bun install && bun run build && bun run check
 
 ```text
 .
-├── go/          # Go module: github.com/the-protobuf-project/resourcename
-├── python/      # uv workspace member: resourcename
-├── rust/        # Cargo workspace member: resourcename (+ rust/macros derive crate)
-├── typescript/  # Bun/npm workspace member: @the-protobuf-project/resourcename
-├── Cargo.toml   # Rust workspace root
-├── go.work      # Go workspace
-├── package.json # JS workspace root
-└── pyproject.toml # uv workspace root
+├── resourcename.go # Go public API — re-exports the ./go implementation
+├── go.mod          # Go module root: github.com/the-protobuf-project/resourcename
+├── go/             # Go implementation package (.../resourcename/go)
+├── python/         # uv workspace member: resourcename
+├── rust/           # Cargo workspace member: resourcename (+ rust/macros derive crate)
+├── typescript/     # Bun/npm workspace member: @the-protobuf-project/resourcename
+├── Cargo.toml      # Rust workspace root
+├── package.json    # JS workspace root
+└── pyproject.toml  # uv workspace root
 ```
+
+The Go module lives at the repo root (so `go get github.com/the-protobuf-project/resourcename`
+resolves), while the implementation stays in [`go/`](go/) and is re-exported by
+[`resourcename.go`](resourcename.go).
 
 ----
 Copyright 2026 The Protobuf Project. Licensed under the Apache License, Version 2.0

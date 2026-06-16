@@ -4,19 +4,20 @@ Provides bidirectional conversion between resource names and component values
 using template patterns with placeholders.
 
 Example:
-    from resourcename import resourcename
+    import resourcename
 
-    @resourcename("//music.example.com/artists/{artist_id}")
+    # Class-based API
+    t = resourcename.ResourceTemplate("//music.example.com/artists/{artist_id}")
+    t.parse("//music.example.com/artists/radiohead")  # {'artist_id': 'radiohead'}
+    t.generate(artist_id="bjork")                     # "//music.example.com/artists/bjork"
+
+    # Decorator API
+    @resourcename.resource("//music.example.com/artists/{artist_id}")
     class Artist:
         pass
 
-    # Parse a resource name
-    parsed = Artist.resourcename.parse("//music.example.com/artists/radiohead")
-    print(parsed)  # {'artist_id': 'radiohead'}
-
-    # Generate a resource name
-    name = Artist.resourcename.generate(artist_id="bjork")
-    print(name)  # "//music.example.com/artists/bjork"
+    Artist.resourcename.parse("//music.example.com/artists/radiohead")
+    Artist.resourcename.generate(artist_id="bjork")
 """
 
 import re
@@ -171,11 +172,13 @@ class ResourceNamespace:
         return f"ResourceNamespace(template='{self._template.template}')"
 
 
-def resourcename(template: str) -> Callable[[type], type]:
+def resource(template: str) -> Callable[[type], type]:
     """Decorator that attaches a .resourcename namespace to a class.
 
     Usage:
-        @resourcename("//music.example.com/artists/{artist_id}")
+        import resourcename
+
+        @resourcename.resource("//music.example.com/artists/{artist_id}")
         class Artist:
             pass
 

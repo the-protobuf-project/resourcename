@@ -22,17 +22,17 @@ pip install -e .
 ```python
 from resourcename import resourcename
 
-@resourcename("//system.com/devices/{device_id}")
-class Device:
+@resourcename("//music.example.com/artists/{artist_id}")
+class Artist:
     pass
 
 # Parse a resource name
-parsed = Device.resourcename.parse("//system.com/devices/router-01")
-print(parsed)  # {'device_id': 'router-01'}
+parsed = Artist.resourcename.parse("//music.example.com/artists/radiohead")
+print(parsed)  # {'artist_id': 'radiohead'}
 
 # Generate a resource name
-name = Device.resourcename.generate(device_id="sensor-22")
-print(name)    # "//system.com/devices/sensor-22"
+name = Artist.resourcename.generate(artist_id="bjork")
+print(name)    # "//music.example.com/artists/bjork"
 ```
 
 ## Development

@@ -7,7 +7,7 @@ implemented across four languages in a single monorepo.
 A template looks like:
 
 ```text
-//system.com/devices/{device_id}
+//music.example.com/artists/{artist_id}
 ```
 
 Each `{placeholder}` matches exactly one path segment (`[^/]+`), so generated values may not
@@ -27,14 +27,14 @@ contain `/`.
 ```go
 import "github.com/the-protobuf-project/resourcename"
 
-type User struct {
-    _    struct{} `resource:"//example.com/users/{id}/{name}"`
+type Artist struct {
+    _    struct{} `resource:"//music.example.com/artists/{id}/{name}"`
     ID   string   `resource:"id"`
     Name string   `resource:"name"`
 }
 
-rn, _ := resourcename.MarshalResource(&User{ID: "u42", Name: "Ria"})
-// "//example.com/users/u42/Ria"
+rn, _ := resourcename.MarshalResource(&Artist{ID: "ar-42", Name: "Radiohead"})
+// "//music.example.com/artists/ar-42/Radiohead"
 ```
 
 ```bash
@@ -46,12 +46,12 @@ cd go && go test ./... && go run ./example
 ```python
 from resourcename import resourcename
 
-@resourcename("//system.com/devices/{device_id}")
-class Device:
+@resourcename("//music.example.com/artists/{artist_id}")
+class Artist:
     pass
 
-Device.resourcename.parse("//system.com/devices/router-01")   # {'device_id': 'router-01'}
-Device.resourcename.generate(device_id="sensor-22")           # "//system.com/devices/sensor-22"
+Artist.resourcename.parse("//music.example.com/artists/radiohead")   # {'artist_id': 'radiohead'}
+Artist.resourcename.generate(artist_id="bjork")                      # "//music.example.com/artists/bjork"
 ```
 
 ### Rust
@@ -61,13 +61,13 @@ use resourcename::Resource;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Resource)]
-#[resource_name(template = "//system.com/devices/{device_id}")]
-struct DeviceKey {
-    device_id: String,
+#[resource_name(template = "//music.example.com/artists/{artist_id}")]
+struct ArtistKey {
+    artist_id: String,
 }
 
-let generated = DeviceKey { device_id: "sensor-22".into() }.generate()?;
-let parsed = DeviceKey::parse("//system.com/devices/router-01")?;
+let generated = ArtistKey { artist_id: "bjork".into() }.generate()?;
+let parsed = ArtistKey::parse("//music.example.com/artists/radiohead")?;
 ```
 
 ```bash
@@ -80,10 +80,10 @@ cargo run -p resourcename --example basic
 ```ts
 import { resourceNameBase } from "@the-protobuf-project/resourcename";
 
-class Device extends resourceNameBase("//system.com/devices/{device_id}") {}
+class Artist extends resourceNameBase("//music.example.com/artists/{artist_id}") {}
 
-Device.Resource.Parse("//system.com/devices/router-01");
-Device.Resource.Generate({ device_id: "sensor-22" });
+Artist.Resource.Parse("//music.example.com/artists/radiohead");
+Artist.Resource.Generate({ artist_id: "bjork" });
 ```
 
 ```bash

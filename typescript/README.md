@@ -1,6 +1,6 @@
 # `@the-protobuf-project/resourcename`
 
-TypeScript helpers for **resource name** strings with `{placeholder}` segments (Google-style API paths): compile templates, **parse** a full name into segments, **generate** a name from values, and optional **stage-3 `@resourceName`** class decorator or **`resourceNameBase`** `extends` for typed `Device.Resource.Parse` / `Generate`.
+TypeScript helpers for **resource name** strings with `{placeholder}` segments (Google-style API paths): compile templates, **parse** a full name into segments, **generate** a name from values, and optional **stage-3 `@resourceName`** class decorator or **`resourceNameBase`** `extends` for typed `Artist.Resource.Parse` / `Generate`.
 
 ## Requirements
 
@@ -16,10 +16,10 @@ Published **compiled** output lives under `dist/` (see `tsconfig.build.json` and
 ```ts
 import { resourceNameBase } from "@the-protobuf-project/resourcename";
 
-class Device extends resourceNameBase("//system.com/devices/{device_id}") {}
+class Artist extends resourceNameBase("//music.example.com/artists/{artist_id}") {}
 
-Device.Resource.Parse("//system.com/devices/router-01");
-Device.Resource.Generate({ device_id: "sensor-22" });
+Artist.Resource.Parse("//music.example.com/artists/radiohead");
+Artist.Resource.Generate({ artist_id: "bjork" });
 ```
 
 **Decorator** (add `declare static readonly Resource: ClassResource` for typings):
@@ -30,8 +30,8 @@ import {
   type ClassResource,
 } from "@the-protobuf-project/resourcename";
 
-@resourceName("//system.com/devices/{device_id}")
-class Device {
+@resourceName("//music.example.com/artists/{artist_id}")
+class Artist {
   declare static readonly Resource: ClassResource;
 }
 ```

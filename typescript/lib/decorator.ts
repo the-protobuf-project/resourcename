@@ -27,15 +27,15 @@ function attachResource(
 
 /**
  * Return an **abstract** base class with `static readonly Resource` fully typed — extend it so
- * `Device.Resource.Parse` / `Device.Resource.Generate` appear in IntelliSense.
+ * `Artist.Resource.Parse` / `Artist.Resource.Generate` appear in IntelliSense.
  *
- * @param template - Resource pattern with `{placeholder}` segments (e.g. `"//svc/devices/{device_id}"`).
+ * @param template - Resource pattern with `{placeholder}` segments (e.g. `"//music.example.com/artists/{artist_id}"`).
  *
  * @example
  * ```ts
- * class Device extends resourceNameBase("//system.com/devices/{device_id}") {}
- * Device.Resource.Parse("//system.com/devices/router-01");
- * Device.Resource.Generate({ device_id: "sensor-22" });
+ * class Artist extends resourceNameBase("//music.example.com/artists/{artist_id}") {}
+ * Artist.Resource.Parse("//music.example.com/artists/radiohead");
+ * Artist.Resource.Generate({ artist_id: "bjork" });
  * ```
  */
 export function resourceNameBase(template: string) {
@@ -62,8 +62,8 @@ export function resourceNameBase(template: string) {
  *
  * @example
  * ```ts
- * @resourceName("//example.com/items/{item_id}")
- * class Item {
+ * @resourceName("//music.example.com/albums/{album_id}")
+ * class Album {
  *   declare static readonly Resource: ClassResource;
  * }
  * ```

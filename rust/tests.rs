@@ -2,46 +2,46 @@ use crate::{ResourceNameError, ResourceTemplate};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, PartialEq, Eq)]
-struct DeviceKey {
-    #[serde(rename = "device_id")]
+struct ArtistKey {
+    #[serde(rename = "artist_id")]
     id: String,
 }
 
 #[test]
 fn parse_and_generate_map_roundtrip() {
-    let template =
-        ResourceTemplate::new("//system.com/devices/{device_id}").expect("template should compile");
+    let template = ResourceTemplate::new("//music.example.com/artists/{artist_id}")
+        .expect("template should compile");
     let parsed = template
-        .parse("//system.com/devices/router-01")
+        .parse("//music.example.com/artists/radiohead")
         .expect("resource name should parse");
     assert_eq!(
-        parsed.get("device_id"),
-        Some(&"router-01".to_string()),
+        parsed.get("artist_id"),
+        Some(&"radiohead".to_string()),
         "placeholder should be extracted",
     );
     let generated = template.generate(&parsed).expect("values should generate");
-    assert_eq!(generated, "//system.com/devices/router-01");
+    assert_eq!(generated, "//music.example.com/artists/radiohead");
 }
 
 #[test]
 fn serde_renamed_fields_work() {
-    let template =
-        ResourceTemplate::new("//system.com/devices/{device_id}").expect("template should compile");
-    let parsed: DeviceKey = template
-        .parse_into("//system.com/devices/sensor-22")
+    let template = ResourceTemplate::new("//music.example.com/artists/{artist_id}")
+        .expect("template should compile");
+    let parsed: ArtistKey = template
+        .parse_into("//music.example.com/artists/bjork")
         .expect("typed parse should succeed");
     assert_eq!(
         parsed,
-        DeviceKey {
-            id: "sensor-22".to_string()
+        ArtistKey {
+            id: "bjork".to_string()
         }
     );
     let generated = template
-        .generate_from(&DeviceKey {
-            id: "camera-7".to_string(),
+        .generate_from(&ArtistKey {
+            id: "the-cure".to_string(),
         })
         .expect("typed generate should succeed");
-    assert_eq!(generated, "//system.com/devices/camera-7");
+    assert_eq!(generated, "//music.example.com/artists/the-cure");
 }
 
 #[test]
@@ -62,28 +62,28 @@ fn rejects_unbalanced_braces() {
 
 #[test]
 fn rejects_invalid_placeholder_name() {
-    let err = ResourceTemplate::new("//x/{device-id}")
+    let err = ResourceTemplate::new("//x/{artist-id}")
         .expect_err("invalid placeholder name should error");
     assert!(matches!(err, ResourceNameError::InvalidPlaceholder(_)));
 }
 
 #[derive(Debug, Serialize)]
-struct DeviceStatus {
-    device_id: String,
-    online: bool,
-    retries: u8,
+struct ArtistStatus {
+    artist_id: String,
+    touring: bool,
+    rank: u8,
 }
 
 #[test]
 fn typed_generate_accepts_bool_and_number_scalars() {
-    let template = ResourceTemplate::new("//x/{device_id}/{online}/{retries}")
+    let template = ResourceTemplate::new("//x/{artist_id}/{touring}/{rank}")
         .expect("template should compile");
     let path = template
-        .generate_from(&DeviceStatus {
-            device_id: "camera-7".to_string(),
-            online: true,
-            retries: 3,
+        .generate_from(&ArtistStatus {
+            artist_id: "the-cure".to_string(),
+            touring: true,
+            rank: 3,
         })
         .expect("typed generation should succeed");
-    assert_eq!(path, "//x/camera-7/true/3");
+    assert_eq!(path, "//x/the-cure/true/3");
 }

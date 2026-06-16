@@ -4,29 +4,29 @@ use resourcename::Resource;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
-struct Tenant {
-    tenant_id: String,
+struct Artist {
+    artist_id: String,
 }
 
 #[derive(Debug, Deserialize, Serialize, Resource)]
-#[resource_name(template = "//system.com/tenants/{tenant_id}/devices/{device_id}")]
-struct DeviceRef {
+#[resource_name(template = "//music.example.com/artists/{artist_id}/albums/{album_id}")]
+struct AlbumRef {
     #[serde(flatten)]
-    tenant: Tenant,
-    device_id: String,
+    artist: Artist,
+    album_id: String,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let generated = DeviceRef {
-        tenant: Tenant {
-            tenant_id: "alpha".to_string(),
+    let generated = AlbumRef {
+        artist: Artist {
+            artist_id: "radiohead".to_string(),
         },
-        device_id: "camera-7".to_string(),
+        album_id: "in-rainbows".to_string(),
     }
     .generate()?;
     println!("generated: {generated}");
 
-    let parsed = DeviceRef::parse("//system.com/tenants/beta/devices/lidar-42")?;
+    let parsed = AlbumRef::parse("//music.example.com/artists/the-smiths/albums/the-queen-is-dead")?;
     println!("parsed: {parsed:?}");
 
     Ok(())

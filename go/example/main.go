@@ -4,28 +4,28 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/oh-tarnished/runtime-go/ulid"
+	"github.com/oklog/ulid/v2"
 	"github.com/the-protobuf-project/resourcename"
 )
 
-// User represents a basic resource
-type User struct {
-	_    struct{} `resource:"//example.com/users/{id}/{name}"`
+// Artist represents a basic resource
+type Artist struct {
+	_    struct{} `resource:"//music.example.com/artists/{id}/{name}"`
 	ID   string   `resource:"id"`
 	Name string   `resource:"name"`
 }
 
-// Address represents a nested struct
-type Address struct {
-	City string `resource:"city"`
-	Zip  string `resource:"zip"`
+// Album represents a nested struct
+type Album struct {
+	Title string `resource:"title"`
+	Year  string `resource:"year"`
 }
 
-// UserWithAddress demonstrates nested struct support
-type UserWithAddress struct {
-	_       struct{} `resource:"//example.com/users/{id}/{address.city}/{address.zip}"`
-	ID      string   `resource:"id"`
-	Address Address  `resource:"address"`
+// ArtistWithAlbum demonstrates nested struct support
+type ArtistWithAlbum struct {
+	_     struct{} `resource:"//music.example.com/artists/{id}/{album.title}/{album.year}"`
+	ID    string   `resource:"id"`
+	Album Album    `resource:"album"`
 }
 
 func main() {
@@ -39,38 +39,40 @@ func main() {
 }
 
 func demoBasic() {
-	u := &User{ID: ulid.GenerateString(), Name: "Ria"}
+	ulid := ulid.Make()
+	a := &Artist{ID: ulid.String(), Name: "Radiohead"}
 
-	rn, err := resourcename.MarshalResource(u)
+	rn, err := resourcename.MarshalResource(a)
 	if err != nil {
 		log.Fatalf("Marshal error: %v", err)
 	}
 	fmt.Printf("   Marshaled: %s\n", rn)
 
-	u2 := &User{}
-	err = resourcename.UnmarshalResource(rn, u2)
+	a2 := &Artist{}
+	err = resourcename.UnmarshalResource(rn, a2)
 	if err != nil {
 		log.Fatalf("Unmarshal error: %v", err)
 	}
-	fmt.Printf("   Unmarshaled: ID=%s, Name=%s\n", u2.ID, u2.Name)
+	fmt.Printf("   Unmarshaled: ID=%s, Name=%s\n", a2.ID, a2.Name)
 }
 
 func demoNested() {
-	u := &UserWithAddress{
-		ID:      ulid.GenerateString(),
-		Address: Address{City: "NYC", Zip: "10001"},
+	ulid := ulid.Make()
+	a := &ArtistWithAlbum{
+		ID:    ulid.String(),
+		Album: Album{Title: "In-Rainbows", Year: "2007"},
 	}
 
-	rn, err := resourcename.MarshalResource(u)
+	rn, err := resourcename.MarshalResource(a)
 	if err != nil {
 		log.Fatalf("Marshal error: %v", err)
 	}
 	fmt.Printf("   Marshaled: %s\n", rn)
 
-	u2 := &UserWithAddress{}
-	err = resourcename.UnmarshalResource(rn, u2)
+	a2 := &ArtistWithAlbum{}
+	err = resourcename.UnmarshalResource(rn, a2)
 	if err != nil {
 		log.Fatalf("Unmarshal error: %v", err)
 	}
-	fmt.Printf("   Unmarshaled: ID=%s, City=%s, Zip=%s\n", u2.ID, u2.Address.City, u2.Address.Zip)
+	fmt.Printf("   Unmarshaled: ID=%s, Title=%s, Year=%s\n", a2.ID, a2.Album.Title, a2.Album.Year)
 }

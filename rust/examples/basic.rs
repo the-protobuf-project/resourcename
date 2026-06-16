@@ -4,19 +4,19 @@ use resourcename::Resource;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Resource)]
-#[resource_name(template = "//system.com/devices/{device_id}")]
-struct DeviceKey {
-    device_id: String,
+#[resource_name(template = "//music.example.com/artists/{artist_id}")]
+struct ArtistKey {
+    artist_id: String,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let generated = DeviceKey {
-        device_id: "sensor-22".to_string(),
+    let generated = ArtistKey {
+        artist_id: "bjork".to_string(),
     }
     .generate()?;
     println!("generated: {generated}");
 
-    let parsed = DeviceKey::parse("//system.com/devices/router-01")?;
+    let parsed = ArtistKey::parse("//music.example.com/artists/radiohead")?;
     println!("parsed: {parsed:?}");
 
     Ok(())

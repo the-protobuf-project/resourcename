@@ -13,49 +13,49 @@ func TestUnmarshalResource(t *testing.T) {
 		wantErr  bool
 	}{
 		{
-			name:     "basic user unmarshal",
-			resource: "//protobuf_project.com/User/u42/BobTheBuilder/29",
-			target:   &User{},
+			name:     "basic artist unmarshal",
+			resource: "//music.example.com/artists/ar-42/Radiohead/1985",
+			target:   &Artist{},
 			check: func(t *testing.T, v interface{}) {
-				u := v.(*User)
-				if u.ID != "u42" {
-					t.Errorf("ID = %v, want u42", u.ID)
+				a := v.(*Artist)
+				if a.ID != "ar-42" {
+					t.Errorf("ID = %v, want ar-42", a.ID)
 				}
-				if u.Name != "BobTheBuilder" {
-					t.Errorf("Name = %v, want BobTheBuilder", u.Name)
+				if a.Name != "Radiohead" {
+					t.Errorf("Name = %v, want Radiohead", a.Name)
 				}
-				if u.Age != 29 {
-					t.Errorf("Age = %v, want 29", u.Age)
+				if a.Year != 1985 {
+					t.Errorf("Year = %v, want 1985", a.Year)
 				}
 			},
 			wantErr: false,
 		},
 		{
-			name:     "product unmarshal",
-			resource: "//store.com/products/electronics/ABC123",
-			target:   &Product{},
+			name:     "recording unmarshal",
+			resource: "//music.example.com/genres/rock/recordings/OK-Computer",
+			target:   &Recording{},
 			check: func(t *testing.T, v interface{}) {
-				p := v.(*Product)
-				if p.Category != "electronics" {
-					t.Errorf("Category = %v, want electronics", p.Category)
+				r := v.(*Recording)
+				if r.Genre != "rock" {
+					t.Errorf("Genre = %v, want rock", r.Genre)
 				}
-				if p.SKU != "ABC123" {
-					t.Errorf("SKU = %v, want ABC123", p.SKU)
+				if r.Title != "OK-Computer" {
+					t.Errorf("Title = %v, want OK-Computer", r.Title)
 				}
 			},
 			wantErr: false,
 		},
 		{
-			name:     "device unmarshal",
-			resource: "//iot.com/devices/dev001/sensors/temp01",
-			target:   &Device{},
+			name:     "track unmarshal",
+			resource: "//music.example.com/albums/in-rainbows/tracks/15-step",
+			target:   &Track{},
 			check: func(t *testing.T, v interface{}) {
-				d := v.(*Device)
-				if d.DeviceID != "dev001" {
-					t.Errorf("DeviceID = %v, want dev001", d.DeviceID)
+				tr := v.(*Track)
+				if tr.AlbumID != "in-rainbows" {
+					t.Errorf("AlbumID = %v, want in-rainbows", tr.AlbumID)
 				}
-				if d.SensorID != "temp01" {
-					t.Errorf("SensorID = %v, want temp01", d.SensorID)
+				if tr.TrackID != "15-step" {
+					t.Errorf("TrackID = %v, want 15-step", tr.TrackID)
 				}
 			},
 			wantErr: false,
@@ -63,13 +63,13 @@ func TestUnmarshalResource(t *testing.T) {
 		{
 			name:     "invalid resource format",
 			resource: "invalid-resource",
-			target:   &User{},
+			target:   &Artist{},
 			check:    nil,
 			wantErr:  true,
 		},
 		{
 			name:     "nil target",
-			resource: "//protobuf_project.com/User/u42/BobTheBuilder/29",
+			resource: "//music.example.com/artists/ar-42/Radiohead/1985",
 			target:   nil,
 			check:    nil,
 			wantErr:  true,
@@ -96,26 +96,26 @@ func TestMarshalUnmarshalRoundTrip(t *testing.T) {
 		input interface{}
 	}{
 		{
-			name: "user round trip",
-			input: &User{
-				ID:   "u42",
-				Name: "BobTheBuilder",
-				Age:  29,
+			name: "artist round trip",
+			input: &Artist{
+				ID:   "ar-42",
+				Name: "Radiohead",
+				Year: 1985,
 			},
 		},
 		{
-			name: "product round trip",
-			input: &Product{
-				Category: "books",
-				SKU:      "ISBN-123",
+			name: "recording round trip",
+			input: &Recording{
+				Genre: "jazz",
+				Title: "Kind-Of-Blue",
 			},
 		},
 		{
-			name: "device round trip",
-			input: &Device{
-				DeviceID: "dev999",
-				SensorID: "humidity02",
-				Active:   true,
+			name: "track round trip",
+			input: &Track{
+				AlbumID:  "debut",
+				TrackID:  "human-behaviour",
+				Explicit: true,
 			},
 		},
 	}
@@ -131,12 +131,12 @@ func TestMarshalUnmarshalRoundTrip(t *testing.T) {
 			// Unmarshal
 			var target interface{}
 			switch tt.input.(type) {
-			case *User:
-				target = &User{}
-			case *Product:
-				target = &Product{}
-			case *Device:
-				target = &Device{}
+			case *Artist:
+				target = &Artist{}
+			case *Recording:
+				target = &Recording{}
+			case *Track:
+				target = &Track{}
 			}
 
 			err = UnmarshalResource(resource, target)

@@ -2,94 +2,94 @@ package resourcename
 
 import "testing"
 
-type Address struct {
-	City string `resource:"city"`
-	Zip  string `resource:"zip"`
+type Album struct {
+	Title string `resource:"title"`
+	Year  string `resource:"year"`
 }
 
-type UserWithAddress struct {
-	_       struct{} `resource:"//example.com/users/{id}/{address.city}/{address.zip}"`
-	ID      string   `resource:"id"`
-	Address Address  `resource:"address"`
+type ArtistWithAlbum struct {
+	_     struct{} `resource:"//music.example.com/artists/{id}/{album.title}/{album.year}"`
+	ID    string   `resource:"id"`
+	Album Album    `resource:"album"`
 }
 
-type Location struct {
+type Studio struct {
 	Country string `resource:"country"`
 	Region  string `resource:"region"`
 }
 
-type Company struct {
-	Name     string   `resource:"name"`
-	Location Location `resource:"location"`
+type Label struct {
+	Name   string `resource:"name"`
+	Studio Studio `resource:"studio"`
 }
 
-type Employee struct {
-	_       struct{} `resource:"//example.com/employees/{id}/{company.name}/{company.location.country}"`
-	ID      string   `resource:"id"`
-	Company Company  `resource:"company"`
+type Release struct {
+	_     struct{} `resource:"//music.example.com/releases/{id}/{label.name}/{label.studio.country}"`
+	ID    string   `resource:"id"`
+	Label Label    `resource:"label"`
 }
 
 func TestNestedStructMarshal(t *testing.T) {
-	u := &UserWithAddress{ID: "u42", Address: Address{City: "NYC", Zip: "10001"}}
-	rn, err := MarshalResource(u)
+	a := &ArtistWithAlbum{ID: "ar-42", Album: Album{Title: "In-Rainbows", Year: "2007"}}
+	rn, err := MarshalResource(a)
 	if err != nil {
 		t.Fatalf("MarshalResource() error = %v", err)
 	}
-	expected := "//example.com/users/u42/NYC/10001"
+	expected := "//music.example.com/artists/ar-42/In-Rainbows/2007"
 	if rn != expected {
 		t.Errorf("got %v, want %v", rn, expected)
 	}
 
-	e := &Employee{ID: "e100", Company: Company{Name: "Acme", Location: Location{Country: "USA", Region: "West"}}}
-	rn, err = MarshalResource(e)
+	r := &Release{ID: "rel-100", Label: Label{Name: "XL-Recordings", Studio: Studio{Country: "UK", Region: "London"}}}
+	rn, err = MarshalResource(r)
 	if err != nil {
 		t.Fatalf("MarshalResource() error = %v", err)
 	}
-	expected = "//example.com/employees/e100/Acme/USA"
+	expected = "//music.example.com/releases/rel-100/XL-Recordings/UK"
 	if rn != expected {
 		t.Errorf("got %v, want %v", rn, expected)
 	}
 }
 
 func TestNestedStructUnmarshal(t *testing.T) {
-	u := &UserWithAddress{}
-	err := UnmarshalResource("//example.com/users/u42/NYC/10001", u)
+	a := &ArtistWithAlbum{}
+	err := UnmarshalResource("//music.example.com/artists/ar-42/In-Rainbows/2007", a)
 	if err != nil {
 		t.Fatalf("UnmarshalResource() error = %v", err)
 	}
-	if u.ID != "u42" || u.Address.City != "NYC" || u.Address.Zip != "10001" {
-		t.Errorf("got ID=%v, City=%v, Zip=%v", u.ID, u.Address.City, u.Address.Zip)
+	if a.ID != "ar-42" || a.Album.Title != "In-Rainbows" || a.Album.Year != "2007" {
+		t.Errorf("got ID=%v, Title=%v, Year=%v", a.ID, a.Album.Title, a.Album.Year)
 	}
 
-	e := &Employee{}
-	err = UnmarshalResource("//example.com/employees/e100/Acme/USA", e)
+	r := &Release{}
+	err = UnmarshalResource("//music.example.com/releases/rel-100/XL-Recordings/UK", r)
 	if err != nil {
 		t.Fatalf("UnmarshalResource() error = %v", err)
 	}
-	if e.ID != "e100" || e.Company.Name != "Acme" || e.Company.Location.Country != "USA" {
-		t.Errorf("got ID=%v, Name=%v, Country=%v", e.ID, e.Company.Name, e.Company.Location.Country)
+	if r.ID != "rel-100" || r.Label.Name != "XL-Recordings" || r.Label.Studio.Country != "UK" {
+		t.Errorf("got ID=%v, Name=%v, Country=%v", r.ID, r.Label.Name, r.Label.Studio.Country)
 	}
 }
 
 func TestNestedStructRoundTrip(t *testing.T) {
-	u := &UserWithAddress{ID: "u42", Address: Address{City: "SF", Zip: "94102"}}
-	rn, _ := MarshalResource(u)
-	u2 := &UserWithAddress{}
-	if err := UnmarshalResource(rn, u2); err != nil {
+	a := &ArtistWithAlbum{ID: "ar-42", Album: Album{Title: "OK-Computer", Year: "1997"}}
+	rn, _ := MarshalResource(a)
+	a2 := &ArtistWithAlbum{}
+	if err := UnmarshalResource(rn, a2); err != nil {
 		t.Errorf("unmarshal failed: %v", err)
 	}
-	rn2, _ := MarshalResource(u2)
+	rn2, _ := MarshalResource(a2)
 	if rn != rn2 {
 		t.Errorf("round trip failed: %v != %v", rn, rn2)
 	}
 
-	e := &Employee{ID: "e200", Company: Company{Name: "Tech", Location: Location{Country: "CA", Region: "E"}}}
-	rn, _ = MarshalResource(e)
-	e2 := &Employee{}
-	if err := UnmarshalResource(rn, e2); err != nil {
+	r := &Release{ID: "rel-200", Label: Label{Name: "Parlophone", Studio: Studio{Country: "UK", Region: "E"}}}
+	rn, _ = MarshalResource(r)
+	r2 := &Release{}
+	if err := UnmarshalResource(rn, r2); err != nil {
 		t.Errorf("unmarshal failed: %v", err)
 	}
-	rn2, _ = MarshalResource(e2)
+	rn2, _ = MarshalResource(r2)
 	if rn != rn2 {
 		t.Errorf("round trip failed: %v != %v", rn, rn2)
 	}

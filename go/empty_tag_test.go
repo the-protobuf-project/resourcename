@@ -8,7 +8,7 @@ import (
 // TestEmptyTagMarshal verifies that empty resource tags cause marshal errors
 func TestEmptyTagMarshal(t *testing.T) {
 	type BadStruct struct {
-		_    struct{} `resource:"//example.com/bad/{id}"`
+		_    struct{} `resource:"//music.example.com/bad/{id}"`
 		ID   string   `resource:""`
 		Name string   `resource:"name"`
 	}
@@ -26,13 +26,13 @@ func TestEmptyTagMarshal(t *testing.T) {
 // TestEmptyTagUnmarshal verifies that empty resource tags cause unmarshal errors
 func TestEmptyTagUnmarshal(t *testing.T) {
 	type BadStruct struct {
-		_    struct{} `resource:"//example.com/bad/{id}"`
+		_    struct{} `resource:"//music.example.com/bad/{id}"`
 		ID   string   `resource:""`
 		Name string   `resource:"name"`
 	}
 
 	b := &BadStruct{}
-	err := UnmarshalResource("//example.com/bad/test", b)
+	err := UnmarshalResource("//music.example.com/bad/test", b)
 	if err == nil {
 		t.Fatal("Expected error for empty resource tag, got nil")
 	}
@@ -44,15 +44,15 @@ func TestEmptyTagUnmarshal(t *testing.T) {
 // TestEmptyTagNestedMarshal verifies that empty tags in nested structs cause errors
 func TestEmptyTagNestedMarshal(t *testing.T) {
 	type BadNested struct {
-		City string `resource:""`
+		Title string `resource:""`
 	}
 
 	type BadParent struct {
-		_      struct{}  `resource:"//example.com/parent/{nested.city}"`
+		_      struct{}  `resource:"//music.example.com/parent/{nested.title}"`
 		Nested BadNested `resource:"nested"`
 	}
 
-	p := &BadParent{Nested: BadNested{City: "NYC"}}
+	p := &BadParent{Nested: BadNested{Title: "In-Rainbows"}}
 	_, err := MarshalResource(p)
 	if err == nil {
 		t.Fatal("Expected error for empty resource tag in nested struct, got nil")
@@ -65,16 +65,16 @@ func TestEmptyTagNestedMarshal(t *testing.T) {
 // TestEmptyTagNestedUnmarshal verifies that empty tags in nested structs cause unmarshal errors
 func TestEmptyTagNestedUnmarshal(t *testing.T) {
 	type BadNested struct {
-		City string `resource:""`
+		Title string `resource:""`
 	}
 
 	type BadParent struct {
-		_      struct{}  `resource:"//example.com/parent/{nested.city}"`
+		_      struct{}  `resource:"//music.example.com/parent/{nested.title}"`
 		Nested BadNested `resource:"nested"`
 	}
 
 	p := &BadParent{}
-	err := UnmarshalResource("//example.com/parent/NYC", p)
+	err := UnmarshalResource("//music.example.com/parent/In-Rainbows", p)
 	if err == nil {
 		t.Fatal("Expected error for empty resource tag in nested struct, got nil")
 	}

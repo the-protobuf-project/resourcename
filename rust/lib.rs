@@ -11,14 +11,14 @@
 //! use serde::{Deserialize, Serialize};
 //!
 //! #[derive(Debug, Deserialize, Serialize)]
-//! struct DeviceKey {
-//!     #[serde(rename = "device_id")]
+//! struct ArtistKey {
+//!     #[serde(rename = "artist_id")]
 //!     id: String,
 //! }
 //!
-//! let template = ResourceTemplate::new("//system.com/devices/{device_id}")?;
-//! let parsed: DeviceKey = template.parse_into("//system.com/devices/router-01")?;
-//! assert_eq!(parsed.id, "router-01");
+//! let template = ResourceTemplate::new("//music.example.com/artists/{artist_id}")?;
+//! let parsed: ArtistKey = template.parse_into("//music.example.com/artists/radiohead")?;
+//! assert_eq!(parsed.id, "radiohead");
 //! # Ok::<(), resourcename::ResourceNameError>(())
 //! ```
 

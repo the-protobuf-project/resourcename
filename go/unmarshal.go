@@ -18,16 +18,16 @@ import (
 //
 // Example:
 //
-//	type User struct {
-//	    _ struct{} `resource:"//protobuf_project.com/User/{id}/{name}/{age}"`
+//	type Artist struct {
+//	    _ struct{} `resource:"//music.example.com/artists/{id}/{name}/{year}"`
 //	    ID   string `resource:"id"`
 //	    Name string `resource:"name"`
-//	    Age  int    `resource:"age"`
+//	    Year int    `resource:"year"`
 //	}
 //
-//	u := &User{}
-//	err := resourcename.UnmarshalResource("//protobuf_project.com/User/u42/Ria/29", u)
-//	// u.ID == "u42", u.Name == "Ria", u.Age == 29
+//	a := &Artist{}
+//	err := resourcename.UnmarshalResource("//music.example.com/artists/ar-42/Radiohead/1985", a)
+//	// a.ID == "ar-42", a.Name == "Radiohead", a.Year == 1985
 func UnmarshalResource(resource string, v interface{}) error {
 	if v == nil {
 		return fmt.Errorf("nil target")

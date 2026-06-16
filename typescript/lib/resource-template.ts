@@ -168,7 +168,7 @@ export class ResourceTemplate {
 }
 
 /**
- * Static `Device.Resource` API: {@link ClassResource.Parse} / {@link ClassResource.Generate} plus metadata.
+ * Static `Artist.Resource` API: {@link ClassResource.Parse} / {@link ClassResource.Generate} plus metadata.
  */
 export type ClassResource = {
 	readonly Template: string;

@@ -9,16 +9,16 @@
 // template on a struct field (typically an anonymous zero-sized field) and map struct fields
 // to template placeholders:
 //
-//	type User struct {
-//	    _ struct{} `resource:"//example.com/users/{id}"`
+//	type Artist struct {
+//	    _ struct{} `resource:"//music.example.com/artists/{id}"`
 //	    ID string `resource:"id"`
 //	}
 //
-//	u := &User{ID: "u42"}
-//	rn, _ := MarshalResource(u)  // "//example.com/users/u42"
+//	a := &Artist{ID: "radiohead"}
+//	rn, _ := MarshalResource(a)  // "//music.example.com/artists/radiohead"
 //
-//	u2 := &User{}
-//	UnmarshalResource(rn, u2)    // u2.ID == "u42"
+//	a2 := &Artist{}
+//	UnmarshalResource(rn, a2)    // a2.ID == "radiohead"
 //
 // # Supported Types
 //
@@ -32,37 +32,37 @@
 //
 // Templates can contain multiple placeholders for hierarchical resource names:
 //
-//	type Device struct {
-//	    _ struct{} `resource:"//iot.com/devices/{device_id}/sensors/{sensor_id}"`
-//	    DeviceID string `resource:"device_id"`
-//	    SensorID string `resource:"sensor_id"`
+//	type Track struct {
+//	    _ struct{} `resource:"//music.example.com/albums/{album_id}/tracks/{track_id}"`
+//	    AlbumID string `resource:"album_id"`
+//	    TrackID string `resource:"track_id"`
 //	}
 //
-//	d := &Device{DeviceID: "dev001", SensorID: "temp01"}
-//	rn, _ := MarshalResource(d)
-//	// "//iot.com/devices/dev001/sensors/temp01"
+//	t := &Track{AlbumID: "in-rainbows", TrackID: "15-step"}
+//	rn, _ := MarshalResource(t)
+//	// "//music.example.com/albums/in-rainbows/tracks/15-step"
 //
 // # Nested Structs
 //
 // Nested structs are supported using dot notation in template placeholders:
 //
-//	type Address struct {
-//	    City string `resource:"city"`
-//	    Zip  string `resource:"zip"`
+//	type Album struct {
+//	    Title string `resource:"title"`
+//	    Year  string `resource:"year"`
 //	}
 //
-//	type User struct {
-//	    _ struct{} `resource:"//example.com/users/{id}/{address.city}/{address.zip}"`
-//	    ID      string  `resource:"id"`
-//	    Addr Address `resource:"address"`
+//	type Artist struct {
+//	    _ struct{} `resource:"//music.example.com/artists/{id}/{album.title}/{album.year}"`
+//	    ID    string `resource:"id"`
+//	    Album Album  `resource:"album"`
 //	}
 //
-//	u := &User{
-//	    ID: "u42",
-//	    Addr: Address{City: "NYC", Zip: "10001"},
+//	a := &Artist{
+//	    ID: "radiohead",
+//	    Album: Album{Title: "In-Rainbows", Year: "2007"},
 //	}
-//	rn, _ := MarshalResource(u)
-//	// "//example.com/users/u42/NYC/10001"
+//	rn, _ := MarshalResource(a)
+//	// "//music.example.com/artists/radiohead/In-Rainbows/2007"
 //
 // # Template Format
 //

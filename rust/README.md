@@ -2,7 +2,7 @@
 
 Resource-name parsing and generation for templates like:
 
-`//system.com/devices/{device_id}`
+`//music.example.com/artists/{artist_id}`
 
 The crate supports:
 
@@ -25,17 +25,17 @@ use resourcename::Resource;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Resource)]
-#[resource_name(template = "//system.com/devices/{device_id}")]
-struct DeviceKey {
-    device_id: String,
+#[resource_name(template = "//music.example.com/artists/{artist_id}")]
+struct ArtistKey {
+    artist_id: String,
 }
 
-let generated = DeviceKey {
-    device_id: "sensor-22".to_string(),
+let generated = ArtistKey {
+    artist_id: "bjork".to_string(),
 }
 .generate()?;
-let parsed = DeviceKey::parse("//system.com/devices/router-01")?;
-assert_eq!(parsed.device_id, "router-01");
+let parsed = ArtistKey::parse("//music.example.com/artists/radiohead")?;
+assert_eq!(parsed.artist_id, "radiohead");
 # Ok::<(), resourcename::ResourceNameError>(())
 ```
 
@@ -46,18 +46,18 @@ use resourcename::Resource;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Resource)]
-#[resource_name(template = "//system.com/devices/{device_id}")]
-struct DeviceKey {
-    device_id: String,
+#[resource_name(template = "//music.example.com/artists/{artist_id}")]
+struct ArtistKey {
+    artist_id: String,
 }
 
-let generated = DeviceKey {
-    device_id: "camera-7".to_string(),
+let generated = ArtistKey {
+    artist_id: "the-cure".to_string(),
 }
 .generate()?;
 
-let parsed = DeviceKey::parse(&generated)?;
-assert_eq!(parsed.device_id, "camera-7");
+let parsed = ArtistKey::parse(&generated)?;
+assert_eq!(parsed.artist_id, "the-cure");
 # Ok::<(), resourcename::ResourceNameError>(())
 ```
 
@@ -67,11 +67,11 @@ assert_eq!(parsed.device_id, "camera-7");
 use resourcename::ResourceTemplate;
 use std::collections::BTreeMap;
 
-let t = ResourceTemplate::new("//system.com/devices/{device_id}")?;
+let t = ResourceTemplate::new("//music.example.com/artists/{artist_id}")?;
 let mut values = BTreeMap::new();
-values.insert("device_id".to_string(), "sensor-22".to_string());
+values.insert("artist_id".to_string(), "bjork".to_string());
 let generated = t.generate(&values)?;
-assert_eq!(generated, "//system.com/devices/sensor-22");
+assert_eq!(generated, "//music.example.com/artists/bjork");
 # Ok::<(), resourcename::ResourceNameError>(())
 ```
 

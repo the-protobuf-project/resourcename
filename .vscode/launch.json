@@ -19,6 +19,26 @@
             "target": "ResourceNameExample",
             "configuration": "release",
             "preLaunchTask": "swift: Build Release ResourceNameExample"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:resourcename}",
+            "name": "Debug ResourcenameExamples",
+            "target": "ResourcenameExamples",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ResourcenameExamples"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:resourcename}",
+            "name": "Release ResourcenameExamples",
+            "target": "ResourcenameExamples",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ResourcenameExamples"
         }
     ]
 }

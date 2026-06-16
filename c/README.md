@@ -20,8 +20,9 @@ c/
 │   ├── template.c       # rn_template_free + accessors
 │   ├── generate.c       # rn_generate / rn_generate_pairs
 │   └── parse.c          # rn_parse / rn_parse_pairs
-├── example.c
-├── test.c
+├── examples/
+│   ├── example.c
+│   └── test.c
 └── Makefile
 ```
 

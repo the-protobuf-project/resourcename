@@ -18,10 +18,10 @@ $(LIB): $(LIB_OBJ)
 lib/%.o: lib/%.c lib/resourcename.h lib/internal.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
-example: example.c $(LIB)
+example: examples/example.c $(LIB)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $< $(LIB) -o $@
 
-test_runner: test.c $(LIB)
+test_runner: examples/test.c $(LIB)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $< $(LIB) -o $@
 
 run: example

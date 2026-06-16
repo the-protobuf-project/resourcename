@@ -22,6 +22,7 @@ contain `/`.
 | Rust           | [`rust/`](rust/)               | `resourcename` crate (`#[derive(Resource)]`)    |
 | TypeScript     | [`typescript/`](typescript/)   | `@the-protobuf-project/resourcename`            |
 | Swift          | [`swift/`](swift/)             | `Resourcename` (`@Resource` macro)              |
+| C              | [`c/`](c/)                     | `resourcename.h` (`libresourcename`)            |
 
 ### Go
 
@@ -115,6 +116,31 @@ try Artist.resourcename.generate(["artist_id": "bjork"])
 swift build && swift run ResourcenameExamples
 ```
 
+### C
+
+```c
+#include "resourcename.h"
+#include <stddef.h>
+
+typedef struct { char *id; char *name; } Artist;
+static const rn_field ARTIST_FIELDS[] = {
+    { "id", offsetof(Artist, id) }, { "name", offsetof(Artist, name) },
+};
+
+rn_template *t = NULL;
+rn_template_compile("//music.example.com/artists/{id}/{name}", &t);
+
+char *name = NULL;
+Artist a = { .id = "ar-42", .name = "Radiohead" };
+rn_generate(t, &a, ARTIST_FIELDS, 2, &name);   // "//music.example.com/artists/ar-42/Radiohead"
+free(name);
+rn_template_free(t);
+```
+
+```bash
+cd c && make && make run && make test
+```
+
 ## Repository layout
 
 ```text
@@ -126,6 +152,7 @@ swift build && swift run ResourcenameExamples
 ├── rust/           # Cargo workspace member: resourcename (+ rust/macros derive crate)
 ├── typescript/     # Bun/npm workspace member: @the-protobuf-project/resourcename
 ├── swift/          # Swift package sources: Resourcename (+ ResourcenameMacros)
+├── c/              # C library + example + tests (Makefile)
 ├── Cargo.toml      # Rust workspace root
 ├── Package.swift   # Swift package manifest (sources under swift/)
 ├── package.json    # JS workspace root

@@ -21,6 +21,7 @@ contain `/`.
 | Python         | [`python/`](python/)           | `resourcename`                                  |
 | Rust           | [`rust/`](rust/)               | `resourcename` crate (`#[derive(Resource)]`)    |
 | TypeScript     | [`typescript/`](typescript/)   | `@the-protobuf-project/resourcename`            |
+| Swift          | [`swift/`](swift/)             | `Resourcename` (`@Resource` macro)              |
 
 ### Go
 
@@ -95,6 +96,25 @@ Artist.Resource.Generate({ artist_id: "bjork" });
 cd typescript && bun install && bun run build && bun run check
 ```
 
+### Swift
+
+```swift
+import Resourcename
+
+let t = try ResourceTemplate("//music.example.com/artists/{artist_id}")
+try t.parse("//music.example.com/artists/radiohead")  // ["artist_id": "radiohead"]
+try t.generate(["artist_id": "bjork"])                // "//music.example.com/artists/bjork"
+
+// or the @Resource attribute macro
+@Resource("//music.example.com/artists/{artist_id}")
+struct Artist {}
+try Artist.resourcename.generate(["artist_id": "bjork"])
+```
+
+```bash
+swift build && swift run ResourceNameExample
+```
+
 ## Repository layout
 
 ```text
@@ -105,7 +125,9 @@ cd typescript && bun install && bun run build && bun run check
 ├── python/         # uv workspace member: resourcename
 ├── rust/           # Cargo workspace member: resourcename (+ rust/macros derive crate)
 ├── typescript/     # Bun/npm workspace member: @the-protobuf-project/resourcename
+├── swift/          # Swift package sources: Resourcename (+ ResourceNameMacros)
 ├── Cargo.toml      # Rust workspace root
+├── Package.swift   # Swift package manifest (sources under swift/)
 ├── package.json    # JS workspace root
 └── pyproject.toml  # uv workspace root
 ```

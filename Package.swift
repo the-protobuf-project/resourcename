@@ -21,29 +21,29 @@ let package = Package(
     targets: [
         // Macro implementation (compiler plugin) that powers `@Resource`.
         .macro(
-            name: "ResourceNameMacros",
+            name: "ResourcenameMacros",
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
             ],
-            path: "swift/Sources/ResourceNameMacros"
+            path: "swift/Sources/ResourcenameMacros"
         ),
         // Public library: ResourceTemplate, ResourceNamespace, ResourceNameError, @Resource.
         .target(
             name: "Resourcename",
-            dependencies: ["ResourceNameMacros"],
+            dependencies: ["ResourcenameMacros"],
             path: "swift/Sources/Resourcename"
         ),
-        // Runnable demo: `swift run ResourceNameExample`.
+        // Runnable demos with struct fields: `swift run ResourcenameExamples`.
         .executableTarget(
-            name: "ResourceNameExample",
+            name: "ResourcenameExamples",
             dependencies: ["Resourcename"],
-            path: "swift/Sources/Example"
+            path: "swift/Examples"
         ),
         .testTarget(
-            name: "ResourceNameTests",
+            name: "ResourcenameTests",
             dependencies: ["Resourcename"],
-            path: "swift/Tests/ResourceNameTests"
+            path: "swift/Tests/ResourcenameTests"
         ),
     ],
     swiftLanguageModes: [.v6]

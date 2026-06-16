@@ -16,6 +16,10 @@ public enum ResourceNameError: Error, Equatable, Sendable, CustomStringConvertib
     case unexpectedValues(unexpected: [String], expected: [String])
     /// One or more values contained `'/'`, which is not allowed in a single segment.
     case slashInValue([String: String])
+    /// Typed generation requires an `Encodable` value that encodes to a key/value object.
+    case generateInputMustBeObject
+    /// A field encoded to a non-scalar value (only string, bool, and number are supported).
+    case nonStringValue(field: String)
 
     public var description: String {
         switch self {
@@ -34,6 +38,10 @@ public enum ResourceNameError: Error, Equatable, Sendable, CustomStringConvertib
             return "Unexpected values provided: \(unexpected.sorted()). Expected only: \(expected)"
         case let .slashInValue(invalid):
             return "Values contain invalid character '/': \(invalid)"
+        case .generateInputMustBeObject:
+            return "Expected a key/value object for generation"
+        case let .nonStringValue(field):
+            return "Non-scalar value for placeholder '\(field)'"
         }
     }
 }

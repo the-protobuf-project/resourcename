@@ -28,4 +28,4 @@
 /// ```
 @attached(member, names: named(resourcename))
 public macro Resource(_ template: String) =
-    #externalMacro(module: "ResourceNameMacros", type: "ResourceMacro")
+    #externalMacro(module: "ResourcenameMacros", type: "ResourceMacro")

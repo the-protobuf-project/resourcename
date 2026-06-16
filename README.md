@@ -112,7 +112,7 @@ try Artist.resourcename.generate(["artist_id": "bjork"])
 ```
 
 ```bash
-swift build && swift run ResourceNameExample
+swift build && swift run ResourcenameExamples
 ```
 
 ## Repository layout

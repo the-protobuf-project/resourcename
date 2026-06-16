@@ -38,7 +38,8 @@ sources are under `swift/`.
 
 ```bash
 swift build
-swift test
+swift run ResourcenameExamples   # struct-field demos under swift/Examples/
+swift test                       # requires full Xcode (XCTest); CLT-only toolchains can't run it
 ```
 
 ## API

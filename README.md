@@ -125,7 +125,7 @@ swift build && swift run ResourcenameExamples
 ├── python/         # uv workspace member: resourcename
 ├── rust/           # Cargo workspace member: resourcename (+ rust/macros derive crate)
 ├── typescript/     # Bun/npm workspace member: @the-protobuf-project/resourcename
-├── swift/          # Swift package sources: Resourcename (+ ResourceNameMacros)
+├── swift/          # Swift package sources: Resourcename (+ ResourcenameMacros)
 ├── Cargo.toml      # Rust workspace root
 ├── Package.swift   # Swift package manifest (sources under swift/)
 ├── package.json    # JS workspace root

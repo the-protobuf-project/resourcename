@@ -109,7 +109,7 @@ enum ResourceMacroDiagnostic: DiagnosticMessage {
         case .noPlaceholders: id = "noPlaceholders"
         case .duplicatePlaceholders: id = "duplicatePlaceholders"
         }
-        return MessageID(domain: "ResourceNameMacros", id: id)
+        return MessageID(domain: "ResourcenameMacros", id: id)
     }
 }
 

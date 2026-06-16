@@ -1,6 +1,6 @@
-# `@protobuf_project/resourcename` examples
+# `@the-protobuf-project/resourcename` examples
 
-From the **package root** (`resource-name/`), build the library first (published `exports` point at `dist/`):
+From the **package root** (`typescript/`), build the library first (published `exports` point at `dist/`):
 
 ```bash
 bun run build

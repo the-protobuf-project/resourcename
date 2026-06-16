@@ -1,0 +1,16 @@
+[package]
+name = "resourcename-macros"
+version = "0.1.0"
+edition = "2024"
+description = "Derive macro (`Resource`) for the `resourcename` crate."
+license = "Apache-2.0"
+repository = "https://github.com/the-protobuf-project/resourcename"
+
+[lib]
+proc-macro = true
+path = "lib.rs"
+
+[dependencies]
+proc-macro2 = "1"
+quote = "1"
+syn = { version = "2", features = ["full"] }

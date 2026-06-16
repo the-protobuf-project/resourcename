@@ -1,9 +1,9 @@
 {
-	"name": "@protobuf_project/resourcename-examples",
+	"name": "@the-protobuf-project/resourcename-examples",
 	"private": true,
 	"type": "module",
 	"dependencies": {
-		"@protobuf_project/resourcename": "file:.."
+		"@the-protobuf-project/resourcename": "file:.."
 	},
 	"devDependencies": {
 		"@types/bun": "latest",

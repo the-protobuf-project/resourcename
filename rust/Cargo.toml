@@ -1,0 +1,20 @@
+[package]
+name = "resourcename"
+version = "0.1.0"
+edition = "2024"
+description = "Google-style resource-name templates with serde-powered typed parsing and generation."
+license = "Apache-2.0"
+repository = "https://github.com/the-protobuf-project/resourcename"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+macros = { package = "resourcename-macros", path = "macros" }
+regex = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[dev-dependencies]
+trybuild = "1"

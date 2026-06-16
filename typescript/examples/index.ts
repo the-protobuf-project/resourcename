@@ -10,7 +10,7 @@
 import {
 	type ClassResource,
 	resourceName,
-} from "@protobuf_project/resourcename";
+} from "@the-protobuf-project/resourcename";
 
 @resourceName("//system.com/devices/{device_id}")
 class Device {

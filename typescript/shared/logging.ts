@@ -1,5 +1,5 @@
 /**
- * @packageDocumentation Environment-aware logging for `@protobuf_project/resourcename`.
+ * @packageDocumentation Environment-aware logging for `@the-protobuf-project/resourcename`.
  *
  * @remarks
  * - **Browser:** `console` only; ANSI colors off unless `RESOURCE_NAME_COLOR=always`.
@@ -123,7 +123,7 @@ function loadDefaultMeta(): PackageMeta {
 	const nameFromEnv = readEnv("RESOURCE_NAME_PACKAGE_NAME");
 	const versionFromEnv = readEnv("RESOURCE_NAME_PACKAGE_VERSION");
 	return {
-		name: nameFromEnv || "@protobuf_project/resourcename",
+		name: nameFromEnv || "@the-protobuf-project/resourcename",
 		version: versionFromEnv || "1.0.0",
 	};
 }
@@ -240,7 +240,7 @@ export const PackageLogger = {
 };
 
 /**
- * Convenience surface for `@protobuf_project/resourcename`: mostly **debug**, sparse **info**,
+ * Convenience surface for `@the-protobuf-project/resourcename`: mostly **debug**, sparse **info**,
  * **warn** / **error** for validation failures.
  */
 export const ResourceNameLogger = {

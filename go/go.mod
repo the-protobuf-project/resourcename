@@ -1,4 +1,4 @@
-module github.com/the-protobuf-project/resourcename/go
+module github.com/the-protobuf-project/resourcename
 
 go 1.26.4
 

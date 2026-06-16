@@ -1,5 +1,5 @@
 /**
- * @packageDocumentation Shared utilities for `@protobuf_project/resourcename` (logging).
+ * @packageDocumentation Shared utilities for `@the-protobuf-project/resourcename` (logging).
  */
 
 export { LOG_LEVEL_WEIGHT, LogLevel } from "./log-level";

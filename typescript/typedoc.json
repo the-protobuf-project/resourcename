@@ -4,7 +4,7 @@
 	"tsconfig": "./tsconfig.json",
 	"out": "docs/api",
 	"readme": "./README.md",
-	"name": "@protobuf_project/resourcename",
+	"name": "@the-protobuf-project/resourcename",
 	"skipErrorChecking": true,
 	"excludePrivate": true,
 	"excludeProtected": true,

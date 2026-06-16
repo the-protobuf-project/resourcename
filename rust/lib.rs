@@ -27,9 +27,6 @@ mod resource_template;
 mod template_helpers;
 
 pub use macros::Resource;
-pub use macros::ResourceName;
-#[doc(hidden)]
-pub use macros::Resourcename;
 pub use resource_error::ResourceNameError;
 pub use resource_template::ResourceTemplate;
 

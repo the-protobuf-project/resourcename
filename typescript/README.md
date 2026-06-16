@@ -1,4 +1,4 @@
-# `@protobuf_project/resourcename`
+# `@the-protobuf-project/resourcename`
 
 TypeScript helpers for **resource name** strings with `{placeholder}` segments (Google-style API paths): compile templates, **parse** a full name into segments, **generate** a name from values, and optional **stage-3 `@resourceName`** class decorator or **`resourceNameBase`** `extends` for typed `Device.Resource.Parse` / `Generate`.
 
@@ -14,7 +14,7 @@ Published **compiled** output lives under `dist/` (see `tsconfig.build.json` and
 ## Quick start
 
 ```ts
-import { resourceNameBase } from "@protobuf_project/resourcename";
+import { resourceNameBase } from "@the-protobuf-project/resourcename";
 
 class Device extends resourceNameBase("//system.com/devices/{device_id}") {}
 
@@ -28,7 +28,7 @@ Device.Resource.Generate({ device_id: "sensor-22" });
 import {
   resourceName,
   type ClassResource,
-} from "@protobuf_project/resourcename";
+} from "@the-protobuf-project/resourcename";
 
 @resourceName("//system.com/devices/{device_id}")
 class Device {
@@ -56,7 +56,7 @@ Diagnostics use **`ResourceNameLogger`** and **`PackageLogger`** (`shared/`). Th
 import {
   LogLevel,
   ResourceNameLogger,
-} from "@protobuf_project/resourcename";
+} from "@the-protobuf-project/resourcename";
 
 ResourceNameLogger.configure({ minLevel: LogLevel.WARN });
 ```

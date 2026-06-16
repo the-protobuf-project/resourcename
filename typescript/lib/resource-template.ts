@@ -2,7 +2,7 @@
  * @packageDocumentation Bidirectional resource-name templates with `{placeholder}` segments.
  *
  * @remarks
- * - Ports the Python reference under `resource-name/py-examplke/`: each `{placeholder}` segment matches `[^/]+`.
+ * - Ports the Python reference under `python/`: each `{placeholder}` segment matches `[^/]+`.
  * - Pair with {@link resourceName} / {@link resourceNameBase} and {@link ClassResource} for the static API.
  */
 

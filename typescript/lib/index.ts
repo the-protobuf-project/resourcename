@@ -1,5 +1,5 @@
 /**
- * @packageDocumentation Public API for `@protobuf_project/resourcename`.
+ * @packageDocumentation Public API for `@the-protobuf-project/resourcename`.
  *
  * @remarks
  * - **Templates:** {@link ResourceTemplate} compiles `{placeholder}` patterns; segments are `[^/]+`.

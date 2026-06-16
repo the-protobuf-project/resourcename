@@ -4,7 +4,7 @@ Provides bidirectional conversion between resource names and component values
 using template patterns with placeholders.
 
 Example:
-    from google import resourcename
+    from resourcename import resourcename
 
     @resourcename("//system.com/devices/{device_id}")
     class Device:

@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/oh-tarnished/runtime-go/ulid"
-	resourcename "github.com/the-protobuf-project/resourcename/go"
+	"github.com/the-protobuf-project/resourcename"
 )
 
 // User represents a basic resource

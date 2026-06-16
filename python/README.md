@@ -20,7 +20,7 @@ pip install -e .
 ## Usage
 
 ```python
-from google import resourcename
+from resourcename import resourcename
 
 @resourcename("//system.com/devices/{device_id}")
 class Device:

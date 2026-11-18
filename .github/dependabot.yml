@@ -1,0 +1,40 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directories:
+      - "/"
+      - "/typescript"
+      - "/typescript/examples"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "ParthuReddy31"
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "ParthuReddy31"
+  - package-ecosystem: "cargo"
+    directories:
+      - "/"
+      - "/rust"
+      - "/rust/macros"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "ParthuReddy31"
+  - package-ecosystem: "pip"
+    directories:
+      - "/"
+      - "/python"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "ParthuReddy31"
+  - package-ecosystem: "swift"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "ParthuReddy31"

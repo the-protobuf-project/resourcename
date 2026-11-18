@@ -7,14 +7,10 @@ updates:
       - "/typescript/examples"
     schedule:
       interval: "weekly"
-    assignees:
-      - "ParthuReddy31"
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
       interval: "weekly"
-    assignees:
-      - "ParthuReddy31"
   - package-ecosystem: "cargo"
     directories:
       - "/"
@@ -22,19 +18,13 @@ updates:
       - "/rust/macros"
     schedule:
       interval: "weekly"
-    assignees:
-      - "ParthuReddy31"
   - package-ecosystem: "pip"
     directories:
       - "/"
       - "/python"
     schedule:
       interval: "weekly"
-    assignees:
-      - "ParthuReddy31"
   - package-ecosystem: "swift"
     directory: "/"
     schedule:
       interval: "weekly"
-    assignees:
-      - "ParthuReddy31"

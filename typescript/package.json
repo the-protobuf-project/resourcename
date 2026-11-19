@@ -54,7 +54,7 @@
 	"devDependencies": {
 		"@types/bun": "latest",
 		"open": "^10.1.0",
-		"typedoc": "^0.27.6",
+		"typedoc": "^0.28.20",
 		"typescript": "^6.0.2"
 	}
 }
